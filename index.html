@@ -1204,7 +1204,7 @@
         const posterDesc = document.getElementById('posterDesc');
         const happinessList = document.getElementById('happinessList');
         const ideaTags = document.getElementById('ideaTags');
-        const mobileShareUrl = 'http://192.168.5.6:8081/blissful_weekend.html';
+        const publicShareUrl = 'https://fantianxin96.github.io/blissful-weekend-guide/';
         const randomStart = Math.floor(Math.random() * 360);
         let isChoosing = false;
         let activeCandidate = null;
@@ -1324,22 +1324,25 @@
 
         async function sharePage() {
             const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+            const isPublicWeb = /^https?:$/.test(window.location.protocol) && !isLocalhost;
+            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+            const shareUrl = isPublicWeb ? window.location.href : publicShareUrl;
             const shareData = {
                 title: '小确幸周末指南',
                 text: '三十二件不花钱的小事，随机抽一个周末小任务。',
-                url: isLocalhost ? mobileShareUrl : window.location.href
+                url: shareUrl
             };
 
             try {
-                if (navigator.share) {
+                if (navigator.share && !isWeChat) {
                     await navigator.share(shareData);
                     showShareTip('已打开系统分享', shareData.url);
                     return;
                 }
 
-                await navigator.clipboard.writeText(shareData.url);
+                await copyShareUrl(shareData.url);
                 shareBtn.textContent = '已复制';
-                showShareTip('链接已复制，同一 Wi-Fi 的手机可打开', shareData.url);
+                showShareTip(isWeChat ? '链接已复制，微信里也可以点右上角 ··· 转发给朋友' : '链接已复制，可以直接发给朋友', shareData.url);
                 window.setTimeout(() => {
                     shareBtn.textContent = '分享';
                 }, 1400);
@@ -1353,9 +1356,35 @@
             }
         }
 
+        async function copyShareUrl(url) {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(url);
+                return;
+            }
+
+            const textarea = document.createElement('textarea');
+            textarea.value = url;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-1000px';
+            textarea.style.left = '-1000px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+            const didCopy = document.execCommand('copy');
+            document.body.removeChild(textarea);
+            if (!didCopy) throw new Error('copy failed');
+        }
+
         function showShareTip(message, url) {
             window.clearTimeout(shareTipTimer);
-            shareTip.innerHTML = `${message}<a href="${url}">${url}</a>`;
+            shareTip.textContent = '';
+            const messageNode = document.createElement('span');
+            messageNode.textContent = message;
+            const linkNode = document.createElement('a');
+            linkNode.href = url;
+            linkNode.textContent = url;
+            shareTip.append(messageNode, linkNode);
             shareTip.classList.add('is-visible');
             shareTipTimer = window.setTimeout(() => {
                 shareTip.classList.remove('is-visible');
