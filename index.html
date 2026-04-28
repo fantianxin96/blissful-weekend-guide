@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7edf0">
+    <meta name="description" content="三十二件不花钱的小确幸，随机抽一个周末小任务。">
+    <title>小确幸周末指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --font-main: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            --primary: #8f7aa8;
+            --secondary: #e89bbe;
+            --accent: #efc3dd;
+            --light: #fbf2f5;
+            --paper: #fffafb;
+            --dark: #514260;
+            --text: #4a4453;
+            --muted: #766f7d;
+            --space-xs: 8px;
+            --space-sm: 12px;
+            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        body {
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            background:
+                radial-gradient(circle at 12% 0%, rgba(255, 233, 241, 0.5), transparent 32vw),
+                radial-gradient(circle at 90% 86%, rgba(229, 219, 239, 0.42), transparent 34vw),
+                linear-gradient(135deg, #fbf3f6 0%, #f6eff4 100%);
+            color: var(--text);
+            min-height: 100svh;
+            padding: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            min-height: calc(100svh - 32px);
+            display: grid;
+            grid-template-rows: auto 1fr auto auto;
+            gap: var(--space-sm);
+        }
+        
+        header {
+            position: relative;
+            text-align: center;
+            padding: 18px 58px 16px;
+            background: rgba(255, 252, 253, 0.82);
+            border: 1px solid rgba(143, 122, 168, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 14px 32px rgba(143, 122, 168, 0.08);
+        }
+        
+        h1 {
+            font-family: var(--font-main);
+            font-size: clamp(1.72rem, 7.3vw, 2.8rem);
+            color: var(--dark);
+            margin-bottom: 7px;
+            font-weight: 350;
+            letter-spacing: 0;
+            line-height: 1.12;
+        }
+        
+        .subtitle {
+            font-size: clamp(0.95rem, 3.6vw, 1.18rem);
+            color: var(--primary);
+            font-style: italic;
+            font-weight: 600;
+            margin-bottom: 0;
+            line-height: 1.35;
+        }
+        
+        .intro {
+            max-width: 640px;
+            margin: 0 auto;
+            font-size: 0.92rem;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: var(--space-xs);
+            align-content: center;
+        }
+        
+        .activity-card {
+            min-width: 0;
+            min-height: 86px;
+            background:
+                linear-gradient(180deg, color-mix(in srgb, var(--card-bg, white) 28%, white) 0%, rgba(255, 255, 255, 0.94) 100%);
+            border: 1px solid color-mix(in srgb, var(--card-accent, var(--accent)) 18%, white);
+            border-radius: 17px;
+            padding: 10px 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out), border-color 0.22s var(--ease-out), background 0.22s var(--ease-out);
+            text-align: center;
+            box-shadow: 0 8px 18px rgba(143, 122, 168, 0.055);
+            appearance: none;
+            color: inherit;
+        }
+        
+        .activity-card:hover,
+        .activity-card:focus-visible {
+            transform: translateY(-3px);
+            border-color: color-mix(in srgb, var(--card-accent, var(--accent)) 42%, white);
+            box-shadow: 0 14px 28px rgba(143, 122, 168, 0.13);
+            outline: none;
+        }
+
+        .activity-card.is-candidate {
+            transform: translateY(-5px) scale(1.04);
+            border-color: color-mix(in srgb, var(--card-accent, var(--accent)) 54%, white);
+            background:
+                linear-gradient(180deg, color-mix(in srgb, var(--card-bg, white) 48%, white) 0%, rgba(255, 255, 255, 0.96) 100%);
+            box-shadow: 0 18px 30px color-mix(in srgb, var(--card-accent, var(--accent)) 18%, transparent);
+            animation: choosePulse 0.34s var(--ease-out);
+        }
+
+        @keyframes choosePulse {
+            0% { transform: translateY(0) scale(0.96); }
+            100% { transform: translateY(-5px) scale(1.04); }
+        }
+        
+        .emoji {
+            font-size: 1.55rem;
+            display: block;
+            line-height: 1;
+        }
+        
+        .activity-title {
+            font-size: 0.86rem;
+            color: var(--dark);
+            font-weight: 650;
+            line-height: 1.18;
+            letter-spacing: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .activity-desc {
+            display: none;
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        .controls {
+            display: block;
+            margin-top: 4px;
+        }
+        
+        .random-btn {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #ffa7b8 0%, #f28aa2 100%);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 800;
+            transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
+            box-shadow: 0 12px 26px rgba(242, 138, 162, 0.22);
+        }
+
+        .random-btn.is-rolling {
+            animation: buttonBreath 0.7s var(--ease-out) infinite alternate;
+        }
+
+        @keyframes buttonBreath {
+            from {
+                box-shadow: 0 12px 24px rgba(242, 138, 162, 0.18);
+                transform: translateY(0) scale(0.992);
+            }
+            to {
+                box-shadow: 0 16px 30px rgba(242, 138, 162, 0.3);
+                transform: translateY(-1px) scale(1);
+            }
+        }
+        
+        .random-btn:hover,
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .random-btn:active,
+        .share-btn:active {
+            transform: translateY(0);
+        }
+
+        .random-btn:disabled {
+            opacity: 0.82;
+            cursor: wait;
+        }
+
+        .share-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            min-width: 54px;
+            min-height: 32px;
+            padding: 0 12px;
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--dark);
+            border: 1px solid rgba(143, 122, 168, 0.18);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 7px 16px rgba(143, 122, 168, 0.06);
+            transition: transform 0.2s var(--ease-out), background 0.2s var(--ease-out);
+        }
+
+        .share-tip {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            z-index: 1200;
+            width: min(calc(100vw - 24px), 520px);
+            transform: translate(-50%, 16px);
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(143, 122, 168, 0.16);
+            border-radius: 18px;
+            box-shadow: 0 18px 42px rgba(63, 52, 76, 0.18);
+            color: var(--dark);
+            font-size: 0.9rem;
+            line-height: 1.45;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+        }
+
+        .share-tip.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, 0);
+        }
+
+        .share-tip a {
+            display: block;
+            margin-top: 6px;
+            color: var(--primary);
+            font-weight: 700;
+            overflow-wrap: anywhere;
+            text-decoration: none;
+        }
+        
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(40, 40, 40, 0.68);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 36px;
+            max-width: 660px;
+            width: 100%;
+            padding: 50px 40px 54px;
+            position: relative;
+            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 34px 70px rgba(33, 29, 36, 0.34);
+        }
+
+        .modal-content.is-hidden,
+        .selection-loader.is-hidden {
+            display: none;
+        }
+
+        .selection-loader {
+            width: min(calc(100vw - 48px), 280px);
+            padding: 20px 20px 18px;
+            display: grid;
+            justify-items: center;
+            gap: 11px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 28% 20%, rgba(255, 217, 226, 0.72), transparent 34%),
+                radial-gradient(circle at 78% 72%, rgba(221, 236, 255, 0.68), transparent 34%),
+                rgba(255, 255, 255, 0.96);
+            box-shadow: 0 26px 60px rgba(33, 29, 36, 0.26);
+            animation: loaderIn 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .loader-mark {
+            height: 36px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .loader-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 999px;
+            background: #ff9dad;
+            box-shadow: 0 8px 18px rgba(255, 157, 173, 0.26);
+            animation: collectBounce 0.78s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+        }
+
+        .loader-dot:nth-child(2) {
+            width: 14px;
+            height: 14px;
+            background: #ffd66e;
+            box-shadow: 0 8px 18px rgba(255, 214, 110, 0.24);
+            animation-delay: 0.1s;
+        }
+
+        .loader-dot:nth-child(3) {
+            background: #91d9c0;
+            box-shadow: 0 8px 18px rgba(145, 217, 192, 0.24);
+            animation-delay: 0.2s;
+        }
+
+        .loader-dot:nth-child(4) {
+            width: 9px;
+            height: 9px;
+            background: #a894d6;
+            box-shadow: 0 8px 18px rgba(168, 148, 214, 0.24);
+            animation-delay: 0.3s;
+        }
+
+        .loader-text {
+            color: var(--dark);
+            font-size: 0.94rem;
+            font-weight: 800;
+        }
+
+        .loader-subtext {
+            margin-top: -5px;
+            color: #91889a;
+            font-size: 0.76rem;
+            font-weight: 600;
+        }
+
+        @keyframes loaderIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes collectBounce {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.78;
+            }
+            42% {
+                transform: translateY(-11px) scale(1.08);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #f1f1f1;
+            border: none;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #5a5a5a;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+        
+        .close-btn:hover {
+            background: #e9e9e9;
+            transform: rotate(90deg);
+        }
+        
+        .poster-emoji {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 34px;
+        }
+        
+        .poster-title {
+            font-size: 2.35rem;
+            color: #5a5a5a;
+            text-align: center;
+            margin-bottom: 16px;
+            font-weight: 850;
+            line-height: 1.3;
+        }
+
+        .poster-desc {
+            max-width: 560px;
+            margin: 0 auto 30px;
+            color: #858585;
+            font-size: 1.22rem;
+            font-weight: 700;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .modal-divider {
+            border: 0;
+            border-top: 2px dashed #eeeeee;
+            margin: 0 0 30px;
+        }
+        
+        .happiness-section {
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            margin-bottom: 28px;
+        }
+        
+        .section-title {
+            font-size: 1.32rem;
+            color: #5d5d5d;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 850;
+        }
+        
+        .section-title::before {
+            content: "✨";
+        }
+        
+        .happiness-list {
+            list-style: none;
+        }
+        
+        .happiness-list li {
+            padding: 16px 0;
+            border-bottom: 1px solid #efefef;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #606060;
+            font-size: 1.14rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        
+        .happiness-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .happiness-list li::before {
+            content: "💫";
+            font-size: 1.35rem;
+            flex: 0 0 auto;
+        }
+        
+        .fun-ideas {
+            background: transparent;
+            color: #5d5d5d;
+            border-radius: 0;
+            padding: 0;
+        }
+        
+        .fun-ideas .section-title {
+            color: #5d5d5d;
+        }
+        
+        .fun-ideas .section-title::before {
+            content: "🎯";
+        }
+        
+        .idea-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 0;
+        }
+        
+        .tag {
+            background: #ffa0b2;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 1.02rem;
+            font-weight: 800;
+            box-shadow: 0 10px 24px rgba(255, 160, 178, 0.24);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2px 0 6px;
+            color: var(--text);
+            opacity: 0.6;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            body.preview-iphone {
+                padding-top: 60px;
+                padding-bottom: 18px;
+            }
+
+            .container {
+                min-height: auto;
+                grid-template-rows: auto auto auto;
+                gap: 10px;
+            }
+
+            header {
+                padding: 14px 14px 12px;
+                border-radius: 22px;
+            }
+
+            h1 {
+                font-size: clamp(1.62rem, 7vw, 2.15rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.88rem, 3.45vw, 1rem);
+            }
+
+            .grid-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 6px;
+            }
+
+            .activity-card {
+                flex: 0 0 calc((100% - 18px) / 4);
+                min-height: clamp(45px, 7.05svh, 57px);
+                border-radius: 14px;
+                padding: 6px 4px;
+                gap: 3px;
+            }
+
+            .emoji {
+                font-size: clamp(0.95rem, 5vw, 1.25rem);
+            }
+
+            .activity-title {
+                font-size: clamp(0.56rem, 2.58vw, 0.7rem);
+                line-height: 1.16;
+            }
+
+            .random-btn {
+                min-height: 45px;
+                font-size: 0.92rem;
+            }
+
+            .controls {
+                margin-top: 6px;
+            }
+
+            .share-btn {
+                top: 11px;
+                right: 11px;
+                min-width: 48px;
+                min-height: 28px;
+                padding: 0 10px;
+                font-size: 0.72rem;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .intro {
+                display: none;
+            }
+            .modal-content {
+                max-height: calc(100svh - 24px);
+                overflow-y: auto;
+                padding: 26px 18px 30px;
+                border-radius: 28px;
+            }
+
+            .close-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1.25rem;
+            }
+
+            .poster-emoji {
+                font-size: 2.34rem;
+                margin-bottom: 14px;
+            }
+
+            .poster-title {
+                font-size: 1.44rem;
+                margin-bottom: 8px;
+            }
+
+            .poster-desc {
+                font-size: 0.88rem;
+                margin-bottom: 16px;
+            }
+
+            .modal-divider {
+                margin-bottom: 16px;
+            }
+
+            .section-title {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .happiness-section {
+                margin-bottom: 18px;
+            }
+
+            .happiness-section,
+            .fun-ideas {
+                padding: 0;
+            }
+
+            .happiness-list li {
+                padding: 7px 0;
+                gap: 10px;
+                font-size: 0.9rem;
+            }
+
+            .tag {
+                padding: 8px 12px;
+                font-size: 0.82rem;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .modal-overlay {
+                align-items: center;
+                padding: 12px;
+            }
+        }
+
+        @media (max-height: 720px) and (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                min-height: calc(100svh - 16px);
+                gap: 8px;
+            }
+
+            header {
+                padding: 11px 12px 10px;
+            }
+
+            .subtitle {
+                display: none;
+            }
+
+            .activity-card {
+                min-height: clamp(41px, 6.85svh, 52px);
+                border-radius: 12px;
+            }
+
+            .random-btn,
+            .share-btn {
+                min-height: 42px;
+            }
+
+            .share-btn {
+                min-height: 28px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="share-btn" id="shareBtn" type="button">分享</button>
+            <h1>小确幸周末指南</h1>
+            <div class="subtitle">三十二件不花钱的小事，收获一整天的幸福感</div>
+            <div class="intro">
+                点击任意卡片，或让系统为你随机选择。每件小事都无需花费，却能让平凡的日子闪闪发光。
+            </div>
+        </header>
+        
+        <div class="grid-container" id="activitiesGrid">
+            <!-- 活动卡片通过JavaScript动态生成 -->
+        </div>
+        
+        <div class="controls">
+            <button class="random-btn" id="randomBtn">🎲 随机选一个</button>
+        </div>
+        
+        <footer>
+            <p>设计灵感来自那些被忽略的微小幸福</p>
+            <p>无需远行，不必消费，幸福就在触手可及之处</p>
+        </footer>
+    </div>
+
+    <div class="share-tip" id="shareTip" role="status" aria-live="polite"></div>
+    
+    <!-- 弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="selection-loader is-hidden" id="selectionLoader" role="status" aria-live="polite">
+            <div class="loader-mark" aria-hidden="true">
+                <span class="loader-dot"></span>
+                <span class="loader-dot"></span>
+                <span class="loader-dot"></span>
+                <span class="loader-dot"></span>
+            </div>
+            <div class="loader-text">灵感收集中...</div>
+            <div class="loader-subtext">给今天挑一件小事</div>
+        </div>
+        <div class="modal-content" id="modalContent">
+            <button class="close-btn" id="closeBtn">×</button>
+            <div class="poster-emoji" id="posterEmoji">✨</div>
+            <h2 class="poster-title" id="posterTitle">活动标题</h2>
+            <p class="poster-desc" id="posterDesc">活动描述</p>
+            <hr class="modal-divider">
+            
+            <div class="happiness-section">
+                <h3 class="section-title">你将收获的幸福感</h3>
+                <ul class="happiness-list" id="happinessList">
+                    <!-- 幸福感列表通过JS生成 -->
+                </ul>
+            </div>
+            
+            <div class="fun-ideas">
+                <h3 class="section-title">可以尝试的有趣方式</h3>
+                <div class="idea-tags" id="ideaTags">
+                    <!-- 想法标签通过JS生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 预览模式只用于 iPhone 模型壳里的安全区，不影响真实分享页。
+        if (new URLSearchParams(window.location.search).get('preview') === 'iphone') {
+            document.body.classList.add('preview-iphone');
+        }
+
+        // 32个不花钱的幸福感活动
+        const activities = [
+            {
+                emoji: "🌅",
+                title: "清晨阳台日出",
+                desc: "比平时早起半小时，在阳台或窗边看一次完整的日出",
+                happiness: [
+                    "感受城市苏醒的宁静时刻",
+                    "阳光洒在脸上的温暖触感",
+                    "一整天都会有的好心情起点",
+                    "与自己独处的珍贵时光"
+                ],
+                ideas: ["泡杯热茶慢慢喝", "用手机拍延时视频", "记录云彩的变化", "听一首轻音乐"]
+            },
+            {
+                emoji: "📚",
+                title: "图书馆漫游",
+                desc: "去附近的图书馆，随机挑选三本不同领域的书翻阅",
+                happiness: [
+                    "纸质书特有的墨香和触感",
+                    "发现意外有趣的知识",
+                    "安静专注的阅读氛围",
+                    "免费的知识海洋漫游"
+                ],
+                ideas: ["只读每本书的前言", "找最老的一本书", "坐在靠窗的位置", "记录三个有趣观点"]
+            },
+            {
+                emoji: "🍃",
+                title: "公园落叶收集",
+                desc: "收集不同形状和颜色的落叶，做成自然标本",
+                happiness: [
+                    "触摸不同叶片的质感",
+                    "发现自然界的多样形态",
+                    "专注当下的放松感",
+                    "创造属于自己的自然收藏"
+                ],
+                ideas: ["按颜色排列", "用手机微距拍摄", "夹在书里做书签", "拼贴成动物形状"]
+            },
+            {
+                emoji: "☕",
+                title: "阳台下午茶",
+                desc: "用家里现有的食材，为自己准备一份简单的下午茶",
+                happiness: [
+                    "亲手制作食物的满足感",
+                    "阳光下的悠闲时光",
+                    "味觉和视觉的双重享受",
+                    "不被打扰的自我款待"
+                ],
+                ideas: ["水果切片摆盘", "用马克杯泡茶", "播放背景音乐", "搭配一本杂志"]
+            },
+            {
+                emoji: "🎵",
+                title: "旧歌重温",
+                desc: "找出五年前最常听的歌单，完整听一遍",
+                happiness: [
+                    "回忆被音乐瞬间唤醒",
+                    "发现当时的心情和故事",
+                    "时间流逝的温柔感触",
+                    "与过去的自己对话"
+                ],
+                ideas: ["写下听到时的感受", "跳舞或跟着哼唱", "分享给那时的朋友", "创建新旧对比歌单"]
+            },
+            {
+                emoji: "📸",
+                title: "手机摄影挑战",
+                desc: "只用手机，拍摄十张不同角度的居家物品",
+                happiness: [
+                    "发现日常之物的另一面",
+                    "创造美的成就感",
+                    "专注观察的平静",
+                    "拥有独特的视觉记录"
+                ],
+                ideas: ["从地面仰拍", "利用窗户光影", "拍摄纹理细节", "黑白模式尝试"]
+            },
+            {
+                emoji: "🖋️",
+                title: "手写信件",
+                desc: "给一位久未联系的朋友手写一封信",
+                happiness: [
+                    "笔尖划过纸张的触感",
+                    "真诚表达带来的温暖",
+                    "慢节奏沟通的珍贵",
+                    "期待回信的微妙喜悦"
+                ],
+                ideas: ["用彩色笔画插图", "夹一片干花", "折成特殊形状", "用蜡封口"]
+            },
+            {
+                emoji: "🌙",
+                title: "月光散步",
+                desc: "夜晚在小区或附近安静街道散步，抬头看月亮",
+                happiness: [
+                    "夜晚独有的宁静氛围",
+                    "月光洒落的温柔光影",
+                    "独处思考的自由空间",
+                    "与自然节律的连接"
+                ],
+                ideas: ["观察月亮的变化", "听夜晚的声音", "深呼吸感受空气", "数星星"]
+            },
+            {
+                emoji: "🧘",
+                title: "十分钟冥想",
+                desc: "找一个安静角落，闭上眼睛专注呼吸十分钟",
+                happiness: [
+                    "思绪逐渐平静的安宁",
+                    "身体放松的舒适感",
+                    "与内在自我的连接",
+                    "重新充电的清新感"
+                ],
+                ideas: ["关注呼吸节奏", "聆听环境声音", "扫描身体感受", "使用冥想APP引导"]
+            },
+            {
+                emoji: "🎨",
+                title: "咖啡渍画",
+                desc: "用咖啡或茶渍在纸上作画",
+                happiness: [
+                    "意外效果的惊喜",
+                    "自由创作的乐趣",
+                    "废物利用的满足",
+                    "独一无二的艺术品"
+                ],
+                ideas: ["用手指涂抹", "用吸管吹出形状", "叠加不同浓度", "画完后题字"]
+            },
+            {
+                emoji: "📖",
+                title: "朗读练习",
+                desc: "选一段喜欢的文字，大声朗读出来",
+                happiness: [
+                    "声音振动的身体感受",
+                    "文字通过声音的再创造",
+                    "表达情感的畅快",
+                    "语言韵律的美感"
+                ],
+                ideas: ["录下来自己听", "模仿不同角色", "调整语速语调", "对着镜子练习"]
+            },
+            {
+                emoji: "🌿",
+                title: "植物观察",
+                desc: "仔细观察一盆植物的每个细节",
+                happiness: [
+                    "发现微小生命的奇迹",
+                    "专注带来的心流体验",
+                    "与自然连接的平静",
+                    "观察力提升的成就感"
+                ],
+                ideas: ["画下叶片脉络", "测量生长变化", "记录光照影响", "与植物对话想象"]
+            },
+            {
+                emoji: "🍞",
+                title: "面包香气记忆",
+                desc: "经过面包店时深深呼吸，回忆与面包相关的温暖记忆",
+                happiness: [
+                    "气味触发的情感回忆",
+                    "感官享受的简单快乐",
+                    "童年味道的温暖",
+                    "当下片刻的美好停留"
+                ],
+                ideas: ["描述香气的词语", "关联的人物场景", "写下回忆片段", "分享给他人"]
+            },
+            {
+                emoji: "💭",
+                title: "白日梦时间",
+                desc: "设定计时器，允许自己完全放空做白日梦",
+                happiness: [
+                    "想象力自由驰骋的愉悦",
+                    "无压力思考的轻松",
+                    "创意灵感的涌现",
+                    "精神上的休息充电"
+                ],
+                ideas: ["想象理想生活", "构思故事场景", "回忆美好时刻", "幻想未来旅行"]
+            },
+            {
+                emoji: "📝",
+                title: "感恩清单",
+                desc: "写下今天值得感谢的十件小事",
+                happiness: [
+                    "积极心态的培养",
+                    "发现被忽略的美好",
+                    "内心充盈的满足感",
+                    "生活重心的重新调整"
+                ],
+                ideas: ["感谢自己的身体", "感谢自然馈赠", "感谢陌生人的善意", "感谢自己的努力"]
+            },
+            {
+                emoji: "🎬",
+                title: "默片观赏",
+                desc: "找一部老默片，关掉声音观看",
+                happiness: [
+                    "专注视觉表达的乐趣",
+                    "发现早期电影的创意",
+                    "想象力的自由补充",
+                    "慢节奏观影的独特体验"
+                ],
+                ideas: ["自己配背景音乐", "猜测人物对话", "观察肢体语言", "研究镜头运用"]
+            },
+            {
+                emoji: "🧹",
+                title: "角落整理",
+                desc: "选择一个被忽略的角落彻底整理",
+                happiness: [
+                    "整理带来的秩序感",
+                    "发现旧物的惊喜",
+                    "空间焕然一新的满足",
+                    "断舍离的轻松"
+                ],
+                ideas: ["拍照记录前后", "分类摆放物品", "创造新的功能", "添加装饰元素"]
+            },
+            {
+                emoji: "🌧️",
+                title: "听雨冥想",
+                desc: "下雨时坐在窗边，专注听雨声",
+                happiness: [
+                    "自然白噪音的安抚",
+                    "时间慢下来的宁静",
+                    "与天气共鸣的连接",
+                    "感官的纯粹享受"
+                ],
+                ideas: ["分辨雨滴大小", "观察雨痕轨迹", "记录雨声节奏", "联想相关记忆"]
+            },
+            {
+                emoji: "🛋️",
+                title: "沙发阅读马拉松",
+                desc: "在沙发上用最舒服的姿势连续阅读",
+                happiness: [
+                    "身体完全放松的舒适",
+                    "沉浸故事的忘我体验",
+                    "时间自由支配的奢侈",
+                    "精神世界的丰富滋养"
+                ],
+                ideas: ["准备零食饮料", "调整灯光角度", "使用书签记录", "中间小憩片刻"]
+            },
+            {
+                emoji: "👣",
+                title: "赤脚行走",
+                desc: "在家赤脚感受不同地面的质感",
+                happiness: [
+                    "脚底触觉的敏锐体验",
+                    "回归自然的亲近感",
+                    "身体平衡的重新感知",
+                    "简单动作的专注快乐"
+                ],
+                ideas: ["对比地板地毯", "尝试闭眼行走", "感受温度差异", "按摩脚底穴位"]
+            },
+            {
+                emoji: "🕯️",
+                title: "烛光晚餐",
+                desc: "用蜡烛代替电灯吃一顿饭",
+                happiness: [
+                    "柔和光影的浪漫氛围",
+                    "感官体验的增强",
+                    "慢食的享受",
+                    "日常仪式的美感"
+                ],
+                ideas: ["搭配简单食物", "播放轻柔音乐", "观察火焰跳动", "饭后静坐片刻"]
+            },
+            {
+                emoji: "🎭",
+                title: "角色扮演独处",
+                desc: "想象自己是另一个人度过一小时",
+                happiness: [
+                    "暂时逃离日常的自由",
+                    "想象力游戏的乐趣",
+                    "自我认知的新角度",
+                    "创意表达的满足"
+                ],
+                ideas: ["模仿名人举止", "尝试不同口音", "设计虚拟背景", "记录角色日记"]
+            },
+            {
+                emoji: "🍂",
+                title: "秋叶书签",
+                desc: "收集落叶制作手工书签",
+                happiness: [
+                    "手工创作的成就感",
+                    "自然材料的独特美感",
+                    "专注手作的平静",
+                    "实用又美好的成果"
+                ],
+                ideas: ["压平干燥处理", "用透明胶带塑封", "写上寄语诗句", "赠送朋友分享"]
+            },
+            {
+                emoji: "🎶",
+                title: "厨房打击乐",
+                desc: "用厨房用具创造节奏",
+                happiness: [
+                    "即兴创作的兴奋",
+                    "发现物品新用途",
+                    "节奏感的身体愉悦",
+                    "无拘无束的玩耍"
+                ],
+                ideas: ["锅碗瓢盆组合", "模仿雨声节奏", "录制简单旋律", "随节奏舞蹈"]
+            },
+            {
+                emoji: "🌌",
+                title: "星空想象",
+                desc: "晚上关灯看窗外，想象星空故事",
+                happiness: [
+                    "黑暗中的感官敏锐",
+                    "宇宙连接的浩瀚感",
+                    "想象力无边的自由",
+                    "日常烦恼的暂时忘却"
+                ],
+                ideas: ["连接星星成图案", "编造星座神话", "想象外星人视角", "思考宇宙问题"]
+            },
+            {
+                emoji: "🧵",
+                title: "旧衣改造",
+                desc: "找一件旧衣服尝试简单改造",
+                happiness: [
+                    "旧物新生的成就感",
+                    "动手能力的提升",
+                    "个性化表达的满足",
+                    "环保实践的意义"
+                ],
+                ideas: ["T恤改购物袋", "牛仔裤做杯垫", "添加刺绣装饰", "改变衣服款式"]
+            },
+            {
+                emoji: "🍵",
+                title: "茶道时刻",
+                desc: "用仪式感泡一杯茶",
+                happiness: [
+                    "专注当下的宁静",
+                    "感官的细致体验",
+                    "传统仪式的美感",
+                    "自我照顾的温柔"
+                ],
+                ideas: ["观察茶叶舒展", "闻香三次再饮", "使用专用茶具", "记录茶味变化"]
+            },
+            {
+                emoji: "📓",
+                title: "童年回忆录",
+                desc: "详细写下一段童年记忆",
+                happiness: [
+                    "回忆带来的温暖",
+                    "自我故事的整理",
+                    "时间距离的感悟",
+                    "情感表达的释放"
+                ],
+                ideas: ["描述感官细节", "画出记忆场景", "分析当时感受", "联系现在自己"]
+            },
+            {
+                emoji: "🪞",
+                title: "镜子对话",
+                desc: "对着镜子里的自己认真说话",
+                happiness: [
+                    "自我接纳的练习",
+                    "真实表达的勇气",
+                    "自我认知的清晰",
+                    "内心声音的外化"
+                ],
+                ideas: ["说鼓励的话语", "讨论当前困扰", "设定小目标", "表达感谢欣赏"]
+            },
+            {
+                emoji: "🎪",
+                title: "家庭马戏团",
+                desc: "用家居物品设计简单杂耍",
+                happiness: [
+                    "童真乐趣的回归",
+                    "身体协调的挑战",
+                    "失败再试的坚持",
+                    "自娱自乐的纯粹"
+                ],
+                ideas: ["袜子抛接游戏", "枕头平衡挑战", "椅子障碍课程", "录制搞笑视频"]
+            },
+            {
+                emoji: "🌺",
+                title: "花朵观察",
+                desc: "近距离观察一朵花的每个部分",
+                happiness: [
+                    "微观世界的震撼",
+                    "自然造物的精妙",
+                    "时间静止的专注",
+                    "美学欣赏的愉悦"
+                ],
+                ideas: ["数花瓣数量", "观察颜色渐变", "描绘内部结构", "研究授粉机制"]
+            },
+            {
+                emoji: "🪟",
+                title: "窗边发呆",
+                desc: "坐在窗边十分钟，只看光线和路人的移动",
+                happiness: [
+                    "暂停安排后的松弛感",
+                    "观察生活流动的安静",
+                    "脑袋慢慢变轻的空白",
+                    "把自己交还给当下"
+                ],
+                ideas: ["数经过的颜色", "观察影子变化", "不看手机十分钟", "给窗外写一句话"]
+            }
+        ];
+        
+        // DOM元素
+        const activitiesGrid = document.getElementById('activitiesGrid');
+        const randomBtn = document.getElementById('randomBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const selectionLoader = document.getElementById('selectionLoader');
+        const closeBtn = document.getElementById('closeBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const shareTip = document.getElementById('shareTip');
+        const posterEmoji = document.getElementById('posterEmoji');
+        const posterTitle = document.getElementById('posterTitle');
+        const posterDesc = document.getElementById('posterDesc');
+        const happinessList = document.getElementById('happinessList');
+        const ideaTags = document.getElementById('ideaTags');
+        const mobileShareUrl = 'http://192.168.5.6:8081/blissful_weekend.html';
+        const randomStart = Math.floor(Math.random() * 360);
+        let isChoosing = false;
+        let activeCandidate = null;
+        let shareTipTimer = null;
+
+        function getPastelTheme(index) {
+            const hue = (randomStart + index * 137.508) % 360;
+            return {
+                bg: `oklch(0.982 0.014 ${hue})`,
+                accent: `oklch(0.8 0.045 ${hue})`
+            };
+        }
+
+        function clearCandidate() {
+            if (activeCandidate) {
+                activeCandidate.classList.remove('is-candidate');
+                activeCandidate = null;
+            }
+        }
+
+        function markCandidate(index) {
+            const nextCard = activitiesGrid.querySelector(`[data-index="${index}"]`);
+            clearCandidate();
+            if (nextCard) {
+                nextCard.classList.add('is-candidate');
+                activeCandidate = nextCard;
+            }
+        }
+        
+        // 生成活动卡片
+        function generateActivityCards() {
+            activitiesGrid.innerHTML = '';
+            
+            activities.forEach((activity, index) => {
+                const card = document.createElement('button');
+                const theme = getPastelTheme(index);
+                card.className = 'activity-card';
+                card.dataset.index = index;
+                card.type = 'button';
+                card.style.setProperty('--card-bg', theme.bg);
+                card.style.setProperty('--card-accent', theme.accent);
+                card.setAttribute('aria-label', `${activity.title}：${activity.desc}`);
+                
+                card.innerHTML = `
+                    <span class="emoji">${activity.emoji}</span>
+                    <h3 class="activity-title">${activity.title}</h3>
+                    <p class="activity-desc">${activity.desc}</p>
+                `;
+                
+                card.addEventListener('click', () => showActivityModal(index));
+                activitiesGrid.appendChild(card);
+            });
+        }
+        
+        // 显示活动弹窗
+        function showActivityModal(index) {
+            const activity = activities[index];
+            selectionLoader.classList.add('is-hidden');
+            modalContent.classList.remove('is-hidden');
+            
+            // 更新弹窗内容
+            posterEmoji.textContent = activity.emoji;
+            posterTitle.textContent = activity.title;
+            posterDesc.textContent = activity.desc;
+            
+            // 更新幸福感列表
+            happinessList.innerHTML = '';
+            activity.happiness.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                happinessList.appendChild(li);
+            });
+            
+            // 更新想法标签
+            ideaTags.innerHTML = '';
+            activity.ideas.forEach(idea => {
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.textContent = idea;
+                ideaTags.appendChild(tag);
+            });
+            
+            // 显示弹窗
+            modalOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showSelectionLoader() {
+            modalContent.classList.add('is-hidden');
+            selectionLoader.classList.remove('is-hidden');
+            modalOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 随机选择活动
+        function randomSelectActivity() {
+            if (isChoosing) return;
+
+            const finalIndex = Math.floor(Math.random() * activities.length);
+            clearCandidate();
+            isChoosing = true;
+            randomBtn.disabled = true;
+            randomBtn.textContent = '正在挑选...';
+            showSelectionLoader();
+
+            window.setTimeout(() => {
+                showActivityModal(finalIndex);
+                isChoosing = false;
+                randomBtn.disabled = false;
+                randomBtn.textContent = '🎉 已选中！';
+
+                window.setTimeout(() => {
+                    randomBtn.textContent = '🎲 再选一次';
+                }, 1300);
+            }, 850);
+        }
+
+        async function sharePage() {
+            const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+            const shareData = {
+                title: '小确幸周末指南',
+                text: '三十二件不花钱的小事，随机抽一个周末小任务。',
+                url: isLocalhost ? mobileShareUrl : window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                    showShareTip('已打开系统分享', shareData.url);
+                    return;
+                }
+
+                await navigator.clipboard.writeText(shareData.url);
+                shareBtn.textContent = '已复制';
+                showShareTip('链接已复制，同一 Wi-Fi 的手机可打开', shareData.url);
+                window.setTimeout(() => {
+                    shareBtn.textContent = '分享';
+                }, 1400);
+            } catch (error) {
+                if (error && error.name === 'AbortError') return;
+                shareBtn.textContent = '看链接';
+                showShareTip('复制被浏览器拦截了，长按下面链接复制', shareData.url);
+                window.setTimeout(() => {
+                    shareBtn.textContent = '分享';
+                }, 1800);
+            }
+        }
+
+        function showShareTip(message, url) {
+            window.clearTimeout(shareTipTimer);
+            shareTip.innerHTML = `${message}<a href="${url}">${url}</a>`;
+            shareTip.classList.add('is-visible');
+            shareTipTimer = window.setTimeout(() => {
+                shareTip.classList.remove('is-visible');
+            }, 5200);
+        }
+        
+        // 关闭弹窗
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+            selectionLoader.classList.add('is-hidden');
+            modalContent.classList.remove('is-hidden');
+            isChoosing = false;
+            randomBtn.disabled = false;
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 事件监听
+        randomBtn.addEventListener('click', randomSelectActivity);
+        shareBtn.addEventListener('click', sharePage);
+        closeBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay && !isChoosing) {
+                closeModal();
+            }
+        });
+        
+        // 键盘支持
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.key === ' ' && !modalOverlay.style.display) {
+                randomSelectActivity();
+            }
+        });
+        
+        // 初始化
+        generateActivityCards();
+        
+        // 初始提示
+        console.log('小确幸周末指南已加载！');
+        console.log('点击卡片或按空格键随机选择，收获今日份幸福感。');
+    </script>
+</body>
+</html>
